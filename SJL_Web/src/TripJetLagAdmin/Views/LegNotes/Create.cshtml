@@ -1,0 +1,58 @@
+@model TripJetLagAdmin.Models.LegNote
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>LegNote</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="DeliverLegNote" />
+                    <label asp-for="DeliverLegNote"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Note" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Note" class="form-control" />
+                <span asp-validation-for="Note" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="NoteRetrieved" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="NoteRetrieved" class="form-control" />
+                <span asp-validation-for="NoteRetrieved" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="ReadyToDeliver" />
+                    <label asp-for="ReadyToDeliver"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

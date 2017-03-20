@@ -1,0 +1,42 @@
+@model TripJetLagAdmin.Models.LegNote
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LegNote</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Note)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Note)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NoteRetrieved)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NoteRetrieved)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReadyToDeliver)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReadyToDeliver)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliverLegNote)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DeliverLegNote)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.NoteId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,63 @@
+@model TripJetLagAdmin.Models.LegNote
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>LegNote</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="NoteId" />
+        <div class="form-group">
+            <label asp-for="TripLeg.TripLegText" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input readonly asp-for="TripLeg.TripLegText" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Note" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <textarea asp-for="Note" rows="10"  style="min-width: 50%" class="form-control"></textarea>
+                <span asp-validation-for="Note" class="text-danger" />
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="NoteRetrieved" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="NoteRetrieved" class="form-control" />
+                <span asp-validation-for="NoteRetrieved" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="ReadyToDeliver" />
+                    <label asp-for="ReadyToDeliver"></label>
+                </div>
+            </div><div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="DeliverLegNote" />
+                    <label asp-for="DeliverLegNote"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

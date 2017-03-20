@@ -1,0 +1,68 @@
+@model IEnumerable<TripJetLagAdmin.Models.Trip>
+
+@{
+    ViewData["Title"] = "Trips";
+}
+
+<h2>Trips</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TripId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Traveler.TravelerName)
+            </th>
+            <th>
+                @Html.DisplayName("First Departure Date")
+            </th>
+            <th>
+                @Html.DisplayName("First Departure")
+            </th>
+            <th>
+                @Html.DisplayName("First Destination")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NotesRetrieved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReadyToDeliver)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TripId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Traveler.TravelerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TripLegs.First().DepartureDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TripLegs.First().DepartureAirportCodeNavigation.AirportName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TripLegs.First().ArrivalAirportCodeNavigation.AirportName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NotesRetrieved)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReadyToDeliver)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.TripId">Edit</a> |
+                    @Html.ActionLink("Leg Notes", "Index", "LegNotes", new { id = item.TripId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

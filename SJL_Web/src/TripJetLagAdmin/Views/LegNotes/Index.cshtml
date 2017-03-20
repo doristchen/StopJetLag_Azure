@@ -1,0 +1,63 @@
+@model IEnumerable<TripJetLagAdmin.Models.LegNote>
+
+@{
+    ViewData["Title"] = "Trip Leg Notes";
+}
+
+<h2>Trip Leg Notes</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TripLeg.TripId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TripLeg.Trip.Traveler.TravelerName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.TripLeg.TripLegText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Note)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoteRetrieved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReadyToDeliver)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.TripLeg.TripId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TripLeg.Trip.Traveler.TravelerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TripLeg.TripLegText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoteRetrieved)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReadyToDeliver)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.NoteId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.NoteId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
