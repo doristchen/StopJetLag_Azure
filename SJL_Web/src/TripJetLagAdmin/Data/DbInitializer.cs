@@ -41,8 +41,7 @@ namespace TripJetLagAdmin.Data
             {
                new Traveler{FirstName="Example1",LastName="Traveler1"},
                new Traveler{FirstName="Example2",LastName="Traveler2"},
-               new Traveler{FirstName="Example3",LastName="Traveler3"},
-               new Traveler{FirstName="Example4",LastName="Traveler4"}
+               
 
             };
             foreach (Traveler tv in travelers)
