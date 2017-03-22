@@ -63,7 +63,7 @@ namespace TripJetLagAdmin.Data
                        "You can sleep in until shortly before your arrival on the Chicago to Tokyo flight especially if you did not get to sleep immediately when you boarded the flight in Chicago." +
                        "Do not nap after you arrive in Tokyo, but stay awake until after supper in Tokyo.Early to Bed is ok.",
                  NoteRetrieved=DateTime.Parse("2017-03-08 09:15:00"), ReadyToDeliver=true},
-                new LegNote { }, new LegNote { },
+                new LegNote { },
 
             };
 
