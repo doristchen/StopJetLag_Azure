@@ -10,22 +10,18 @@ namespace TripJetLagAPI.Data
 {
     public static class DataAccess
     {
-        public static DbDataReader QueryStoredProcdure(string spName, int id, MobileDataDBContext context)
+        public static async Task<DbDataReader> QueryStoredProcdure(string spName, int id, MobileDataDBContext context)
         {
             DbCommand cmd;
-
+         
             cmd = context.Database.GetDbConnection().CreateCommand();
             cmd.CommandText = spName;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new SqlParameter("@Id", id));
 
             if (cmd.Connection.State != ConnectionState.Open)
-                cmd.Connection.Open();
-
-            DbDataReader dr  = cmd.ExecuteReader();
-
-            return dr;
-            
+                await cmd.Connection.OpenAsync();
+            return await cmd.ExecuteReaderAsync();
         }
     }
 }
