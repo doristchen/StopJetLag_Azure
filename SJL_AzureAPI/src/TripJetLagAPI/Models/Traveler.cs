@@ -15,6 +15,5 @@ namespace TripJetLagAPI.Models
         [StringLength(50)]
         public string LastName { get; set; }
 
-        public ICollection<Trip> Trips { get; set; }
-    }
+     }
 }

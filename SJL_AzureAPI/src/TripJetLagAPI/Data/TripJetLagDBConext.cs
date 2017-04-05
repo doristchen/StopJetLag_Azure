@@ -68,18 +68,33 @@ namespace TripJetLagAPI.Data
                     .HasColumnType("char(3)");
 
                 entity.HasOne(d => d.ArrivalAirportCodeNavigation)
-                    .WithMany(p => p.TripLegArrivalAirportCodeNavigation)
-                    .HasForeignKey(d => d.ArrivalAirportCode)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_TripLeg_AAirport");
+                      .WithMany()
+                      .HasForeignKey(d => d.ArrivalAirportCode)
+                      .OnDelete(DeleteBehavior.Restrict)
+                      .HasConstraintName("FK_TripLeg_AAirport");
 
                 entity.HasOne(d => d.DepartureAirportCodeNavigation)
+                      .WithMany()
+                      .HasForeignKey(d => d.DepartureAirportCode)
+                      .OnDelete(DeleteBehavior.Restrict)
+                      .HasConstraintName("FK_TripLeg_DAirport");
+
+
+
+                /*entity.HasOne(d => d.ArrivalAirportCodeNavigation)
+                       .WithMany(p => p.TripLegArrivalAirportCodeNavigation)
+                        .HasForeignKey(d => d.ArrivalAirportCode)
+                    HasOne(d=>d.ArrivalAirportCodeNavigation)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_TripLeg_AAirport"); */
+
+                /*entity.HasOne(d => d.DepartureAirportCodeNavigation)
                     .WithMany(p => p.TripLegDepartureAirportCodeNavigation)
                     .HasForeignKey(d => d.DepartureAirportCode)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_TripLeg_DAirport");
+                    .HasConstraintName("FK_TripLeg_DAirport");*/
 
-             });
+            });
         }
      }
 }

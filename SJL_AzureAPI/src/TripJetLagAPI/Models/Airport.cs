@@ -12,7 +12,5 @@ namespace TripJetLagAPI.Models
         [StringLength(200)]
         public string AirportName { get; set; }
 
-        public ICollection<TripLeg> TripLegArrivalAirportCodeNavigation { get; set; }
-        public ICollection<TripLeg> TripLegDepartureAirportCodeNavigation { get; set; }
-    }
+     }
 }

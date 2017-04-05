@@ -21,29 +21,29 @@ namespace TripJetLagAPI.Controllers
         }
 
         [HttpGet("{id}"), Route("~/api/TripLegs/{Id:int}/Notes")]
-        public IEnumerable<NoteMobile> GetByTripLegId(int id)
+        public Task<IEnumerable<NoteMobile>> GetByTripLegId(int id)
         {
             return _tripnoteRepository.GetAllByTripLegId(id);
         }
                
         [HttpGet("{id}"), Route("~/api/Trips/{Id:int}/Notes")]
-        public IEnumerable<NoteMobile> GetByTripId(int id)
+        public async Task<IEnumerable<NoteMobile>> GetByTripId(int id)
         {
-            return _tripnoteRepository.GetAllByTripId(id);
+            return await _tripnoteRepository.GetAllByTripId(id);
         }
 
         [HttpGet]
-        public IEnumerable<LegNote>GetAll()
+        public async Task<IEnumerable<LegNote>>GetAll()
         {
-            return _tripnoteRepository.GetAll();
+            return await _tripnoteRepository.GetAll();
         }
 
-        //[HttpGet ("{id}", Name="GetTripNote")]
-        [HttpGet]
-        [Route("{id:int}")]
-        public IActionResult GetById(int id)
+        [HttpGet ("{id}")]
+        //[HttpGet]
+        //[Route("{id:int}")]
+        public async Task<IActionResult> GetById(int id)
         {
-            var item = _tripnoteRepository.Find(id);
+            var item = await _tripnoteRepository.Find(id);
             if (item == null)
             {
                 return NotFound();
@@ -53,17 +53,23 @@ namespace TripJetLagAPI.Controllers
         }
 
 
-        //[HttpPut("{id}")]
-        [HttpPut]
-        [Route("{id:int}")]
-        public IActionResult Update(int id, [FromBody] LegNote item)
+        [HttpPut("{id}")]
+        //[HttpPut]
+        //[Route("{id:int}")]
+        public async Task<IActionResult> Update(int id, [FromBody] LegNote item)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             if (item == null || item.NoteId != id)
             {
                 return BadRequest();
             }
 
-            var findItem = _tripnoteRepository.Find(id);
+            var findItem = await _tripnoteRepository.Find(id);
+
             if (findItem == null)
             {
                 return NotFound();
@@ -73,23 +79,40 @@ namespace TripJetLagAPI.Controllers
             findItem.NoteRetrieved = item.NoteRetrieved;
             findItem.ReadyToDeliver = item.ReadyToDeliver;
             findItem.TripLegId = item.TripLegId;
-            findItem.NoteId = item.NoteId;
             
-            _tripnoteRepository.Update(findItem);
+            await _tripnoteRepository.Update(findItem);
             return new NoContentResult();
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            var findItem = await _tripnoteRepository.Find(id);
+            if (findItem == null)
+            {
+                return NotFound();
+            }
+
+            await _tripnoteRepository.Delete(id);
+            return new NoContentResult();
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]LegNote value)
+        public async Task<IActionResult> Post([FromBody]LegNote item)
         {
-        }
+            if (item == null)
+            {
+                return BadRequest();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            await _tripnoteRepository.Add(item);
+            return CreatedAtRoute("GetById", new { id = item.NoteId }, item);
+        }
     }
 }

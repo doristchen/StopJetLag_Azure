@@ -8,11 +8,15 @@ namespace TripJetLagAPI.MobileDataModels
 {
     public interface ITripAdviceRepository
     {
-        IEnumerable<AdviceMobile> GetAllByTripId(int id);
-        IEnumerable<AdviceMobile> GetAllByTripLegId(int id);
-        IEnumerable<Advice> GetAll();
-        Advice Find(int id);
-        void Update(Advice item);
+        Task <IEnumerable<AdviceMobile>> GetAllByTripId(int id);
+        Task <IEnumerable<AdviceMobile>> GetAllByTripLegId(int id);
+        Task <IEnumerable<Advice>> GetAll();
+        Task <Advice>Find(int id);
+        Task <int> Update(Advice item);
+        Task <int> Delete(int id);
+        Task<int> Add(Advice item);
+
+
     }
 }
 

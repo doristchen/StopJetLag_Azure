@@ -8,12 +8,11 @@ namespace TripJetLagAPI.Models
     public class AdviceCategory
     {
         [Key]
-        public int CategoryId { get; set; }
+        public virtual int CategoryId { get; set; }
         [StringLength(500)]
-        public string CategoryDescr { get; set; }
+        public virtual string CategoryDescr { get; set; }
         [StringLength(500)]
-        public string ImageIcon { get; set; }
+        public virtual string ImageIcon { get; set; }
 
-        public ICollection<Advice> Advices { get; set; }
     }
 }

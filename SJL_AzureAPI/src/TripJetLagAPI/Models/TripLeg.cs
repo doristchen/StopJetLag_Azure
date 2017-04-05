@@ -20,9 +20,9 @@ namespace TripJetLagAPI.Models
 
         [ForeignKey("TripId")]
         public Trip Trip { get; set; }
-        public ICollection<Advice> Advices { get; set; }
-        public LegNote LegNote { get; set; }
+        [ForeignKey("DepartureAirportCode")]
         public Airport ArrivalAirportCodeNavigation { get; set; }
+        [ForeignKey("ArrivalAirportCode")]
         public Airport DepartureAirportCodeNavigation { get; set; }
         
     }

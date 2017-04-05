@@ -21,28 +21,28 @@ namespace TripJetLagAPI.Controllers
         }
 
         [HttpGet("{id}"), Route("~/api/TripLegs/{Id:int}/Advices")]
-        public IEnumerable<AdviceMobile> GetByTripLegId(int id)
+        public Task<IEnumerable<AdviceMobile>> GetByTripLegId(int id)
         {
             return _tripadviceRepository.GetAllByTripLegId(id);
         }
 
         [HttpGet("{id}"), Route("~/api/Trips/{Id:int}/Advices")]
-        public IEnumerable<AdviceMobile> GetByTripId(int id)
+        public Task<IEnumerable<AdviceMobile>> GetByTripId(int id)
         {
             return _tripadviceRepository.GetAllByTripId(id);
         }
 
         [HttpGet]
-        public IEnumerable<Advice> GetAll()
+        public async Task<IEnumerable<Advice>> GetAll()
         {
-            return _tripadviceRepository.GetAll();
+            return await _tripadviceRepository.GetAll();
         }
 
-        //[HttpGet ("{id}")]
-        [Route("{id:int}")]
-        public IActionResult GetById(int id)
+        [HttpGet ("{id}")]
+        //[Route("{id:int}")]
+        public async Task<IActionResult> GetById(int id)
         {
-            var item = _tripadviceRepository.Find(id);
+            var item = await _tripadviceRepository.Find(id);
             if (item == null)
             {
                 return NotFound();
@@ -53,14 +53,19 @@ namespace TripJetLagAPI.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Advice item)
+        public async Task<IActionResult> Update(int id, [FromBody] Advice item)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             if (item == null || item.AdviceId != id)
             {
                 return BadRequest();
             }
 
-            var findItem = _tripadviceRepository.Find(id);
+            var findItem = await _tripadviceRepository.Find(id);
             if (findItem == null)
             {
                 return NotFound();
@@ -71,21 +76,40 @@ namespace TripJetLagAPI.Controllers
             findItem.NotificationTime = item.NotificationTime;
             findItem.TripLegId = item.TripLegId;
             
-            _tripadviceRepository.Update(findItem);
+            await _tripadviceRepository.Update(findItem);
             return new NoContentResult();
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]Advice value)
+        public async Task<IActionResult> Post([FromBody]Advice item)
         {
+            if (item == null)
+            {
+                return BadRequest();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _tripadviceRepository.Add(item);
+            return CreatedAtRoute("GetById", new { id = item.AdviceId }, item);
         }
-        
+
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            var findItem = await _tripadviceRepository.Find(id);
+            if (findItem == null)
+            {
+                return NotFound();
+            }
+            
+            await _tripadviceRepository.Delete(id);
+            return new NoContentResult();
         }
     }
 }

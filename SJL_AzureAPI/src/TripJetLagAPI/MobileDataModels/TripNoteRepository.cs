@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using System.Data.Common;
 using TripJetLagAPI.Data;
 using TripJetLagAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace TripJetLagAPI.MobileDataModels
@@ -21,11 +23,11 @@ namespace TripJetLagAPI.MobileDataModels
             _tcontext = tcontext;
         }
 
-        private List<NoteMobile> NoteMobileBuilder(DbDataReader dataReader)
+        private async Task<List<NoteMobile>> NoteMobileBuilder(DbDataReader dataReader)
         {
             List<NoteMobile> results = new List<NoteMobile>();
 
-            while (dataReader.Read())
+            while (await dataReader.ReadAsync())
             {
                 NoteMobile newItem = new NoteMobile();
 
@@ -48,35 +50,44 @@ namespace TripJetLagAPI.MobileDataModels
             return results;
         }
 
-        public IEnumerable<NoteMobile> GetAllByTripId(int id)
+        public async Task<IEnumerable<NoteMobile>> GetAllByTripId(int id)
         {
-            DbDataReader dataReader = DataAccess.QueryStoredProcdure("sp_GetNoteByTrip", id, _context);
-
-            return NoteMobileBuilder(dataReader);
+            return await NoteMobileBuilder(await DataAccess.QueryStoredProcdure("sp_GetNoteByTrip", id, _context));
         }
 
-        public IEnumerable<NoteMobile> GetAllByTripLegId(int id)
+        public async Task<IEnumerable<NoteMobile>> GetAllByTripLegId(int id)
         {
-            DbDataReader dataReader = DataAccess.QueryStoredProcdure("sp_GetNoteByTripLeg", id, _context);
-
-            return NoteMobileBuilder(dataReader);
-
+            return await NoteMobileBuilder(await DataAccess.QueryStoredProcdure("sp_GetNoteByTripLeg", id, _context));
         }
 
-        public LegNote Find (int id)
+        public async Task<LegNote> Find (int id)
         {
-            return _tcontext.LegNotes.FirstOrDefault(t => t.NoteId == id);
+            return await _tcontext.LegNotes.FirstOrDefaultAsync(t => t.NoteId == id);
         }
 
-        public IEnumerable<LegNote> GetAll()
+        public async Task<IEnumerable<LegNote>> GetAll()
         {
-            return _tcontext.LegNotes.ToList();
+            return await _tcontext.LegNotes.AsNoTracking().ToListAsync();
         }
 
-        public void Update(LegNote item)
+        public async Task<int> Update(LegNote item)
         {
             _tcontext.LegNotes.Update(item);
-            _tcontext.SaveChanges();
+            return await _tcontext.SaveChangesAsync();
         }
+
+        public async Task<int>Delete(int id)
+        {
+            var legNote = await Find(id);
+            _tcontext.LegNotes.Remove(legNote);
+            return await _tcontext.SaveChangesAsync();
+        }
+
+        public async Task<int>Add(LegNote item)
+        {
+            _tcontext.Add(item);
+            return await _tcontext.SaveChangesAsync();
+        }
+
     }
 }
