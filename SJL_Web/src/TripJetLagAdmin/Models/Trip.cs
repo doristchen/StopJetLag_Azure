@@ -8,14 +8,18 @@ namespace TripJetLagAdmin.Models
     public class Trip
     {
         [Display(Name = "Id")]
+
+        [Key]
         public int TripId { get; set; }
-        public int TravelerId { get; set; }
         [Display(Name = "Notes Retrieved")]
+        [Column(TypeName = "smalldatetime")]
         public DateTime? NotesRetrieved { get; set; }
         [Display(Name = "Ready To Deliver")]
         public bool ReadyToDeliver { get; set; }
-        public ICollection<TripLeg> TripLegs { get; set; }
+        public int TravelerId { get; set; }
+        
+        [ForeignKey("TravelerId")]
         public Traveler Traveler {get; set;}
-
+        public ICollection<TripLeg> TripLegs { get; set; }
     }
 }

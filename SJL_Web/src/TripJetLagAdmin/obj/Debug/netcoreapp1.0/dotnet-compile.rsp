@@ -245,6 +245,8 @@ C:\Users\dorisc\Documents\Projects\StopJetLag_Azure\SJL_Web\src\TripJetLagAdmin\
 C:\Users\dorisc\Documents\Projects\StopJetLag_Azure\SJL_Web\src\TripJetLagAdmin\Data\Migrations\ApplicationDbContextModelSnapshot.cs
 C:\Users\dorisc\Documents\Projects\StopJetLag_Azure\SJL_Web\src\TripJetLagAdmin\Migrations\20170320014640_InitialSchema.cs
 C:\Users\dorisc\Documents\Projects\StopJetLag_Azure\SJL_Web\src\TripJetLagAdmin\Migrations\20170320014640_InitialSchema.Designer.cs
+C:\Users\dorisc\Documents\Projects\StopJetLag_Azure\SJL_Web\src\TripJetLagAdmin\Migrations\20170328214823_AddTripLegId.cs
+C:\Users\dorisc\Documents\Projects\StopJetLag_Azure\SJL_Web\src\TripJetLagAdmin\Migrations\20170328214823_AddTripLegId.Designer.cs
 C:\Users\dorisc\Documents\Projects\StopJetLag_Azure\SJL_Web\src\TripJetLagAdmin\Migrations\TripJetLagDBContextModelSnapshot.cs
 C:\Users\dorisc\Documents\Projects\StopJetLag_Azure\SJL_Web\src\TripJetLagAdmin\Models\Airport.cs
 C:\Users\dorisc\Documents\Projects\StopJetLag_Azure\SJL_Web\src\TripJetLagAdmin\Models\ApplicationUser.cs

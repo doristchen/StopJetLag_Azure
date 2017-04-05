@@ -33,9 +33,9 @@ namespace TripJetLagAdmin.Controllers
                                  .ThenInclude(t => t.Trip)
                                 .ThenInclude(t => t.Traveler)
                                 .Where(t => t.TripLeg.TripId == id.Value);
-
+               
                 return View(await tripIndexJetLagDBContext.ToListAsync());
-
+                
             }
             else
             {
@@ -45,8 +45,8 @@ namespace TripJetLagAdmin.Controllers
                                  .ThenInclude(t => t.ArrivalAirportCodeNavigation)
                                 .Include(t => t.TripLeg)
                                  .ThenInclude(t => t.Trip)
-                                .ThenInclude(t => t.Traveler);
-
+                                .ThenInclude(t => t.Traveler); 
+                                
                 return View(await tripJetLagDBContext.ToListAsync());
 
             }
@@ -81,7 +81,7 @@ namespace TripJetLagAdmin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("NoteId,Note,NoteRetrieved,ReadyToDeliver, DeliverLegNote")] LegNote legNote)
+        public async Task<IActionResult> Create([Bind("NoteId,Note,NoteRetrieved,ReadyToDeliver, DeliverLegNote, TripLegId")] LegNote legNote)
         {
             if (ModelState.IsValid)
             {
@@ -117,7 +117,7 @@ namespace TripJetLagAdmin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("NoteId,Note,NoteRetrieved,ReadyToDeliver, DeliverLegNote")] LegNote legNote)
+        public async Task<IActionResult> Edit(int id, [Bind("NoteId,Note,NoteRetrieved,ReadyToDeliver, DeliverLegNote, TripLegId")] LegNote legNote)
         {
             if (id != legNote.NoteId)
             {

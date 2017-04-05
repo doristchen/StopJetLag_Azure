@@ -32,93 +32,57 @@ namespace TripJetLagAdmin.Data
 
             modelBuilder.Entity<Airport>(entity =>
             {
-                entity.HasKey(e => e.AirportCode)
-                    .HasName("PK_Airport");
-
                 entity.Property(e => e.AirportCode).HasColumnType("char(3)");
 
-                entity.Property(e => e.AirportName)
-                    .IsRequired()
-                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<LegNote>(entity =>
             {
-                entity.HasKey(e => e.NoteId)
-                    .HasName("PK_LegNote");
-
-                entity.Property(e => e.NoteRetrieved).HasColumnType("smalldatetime");
-
-                entity.Property(e => e.ReadyToDeliver).HasDefaultValueSql("0");
+                entity.HasIndex(e => e.TripLegId)
+                    .HasName("IX_Note_TripLegId")
+                    .IsUnique();
 
                 entity.Property(e => e.DeliverLegNote).HasDefaultValueSql("0");
-            });
+                entity.Property(e => e.ReadyToDeliver).HasDefaultValueSql("0");
 
-            modelBuilder.Entity<Traveler>(entity =>
-            {
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Trip>(entity =>
             {
-                entity.HasIndex(e => e.TravelerId)
-                    .HasName("IX_Trip_TravelerId");
-
-                entity.HasOne(d => d.Traveler)
-                    .WithMany(p => p.Trips)
-                    .HasForeignKey(d => d.TravelerId);
-
                 entity.Property(e => e.ReadyToDeliver).HasDefaultValueSql("0");
-
             });
 
             modelBuilder.Entity<TripLeg>(entity =>
             {
-                entity.HasKey(e => new { e.TripId, e.Segment })
-                    .HasName("PK_TripLeg");
+                entity.HasKey(e=>e.TripLegId)
+                .ForSqlServerIsClustered(false);
 
-                entity.HasIndex(e => e.NoteId)
-                    .HasName("IX_TripLeg_NoteId")
-                    .IsUnique();
+                entity.HasIndex(e => new {e.TripId, e.Segment })
+                     .IsUnique()
+                     .ForSqlServerIsClustered(true)
+                     .HasName("IX_TripLeg_Segment");
+
 
                 entity.Property(e => e.ArrivalAirportCode)
                     .IsRequired()
                     .HasColumnType("char(3)");
 
-                entity.Property(e => e.ArrivalDate).HasColumnType("smalldatetime");
-
                 entity.Property(e => e.DepartureAirportCode)
                     .IsRequired()
                     .HasColumnType("char(3)");
 
-                entity.Property(e => e.DepartureDate).HasColumnType("smalldatetime");
-
                 entity.HasOne(d => d.ArrivalAirportCodeNavigation)
-                    .WithMany(p => p.TripLegArrivalAirportCodeNavigation)
+                    .WithMany()
                     .HasForeignKey(d => d.ArrivalAirportCode)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_TripLeg_AAirport");
 
                 entity.HasOne(d => d.DepartureAirportCodeNavigation)
-                    .WithMany(p => p.TripLegDepartureAirportCodeNavigation)
+                    .WithMany()
                     .HasForeignKey(d => d.DepartureAirportCode)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_TripLeg_DAirport");
 
-                entity.HasOne(d => d.Note)
-                    .WithOne(p => p.TripLeg)
-                    .HasForeignKey<TripLeg>(d => d.NoteId)
-                    .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasOne(d => d.Trip)
-                    .WithMany(p => p.TripLegs)
-                    .HasForeignKey(d => d.TripId);
             });
         }
     }

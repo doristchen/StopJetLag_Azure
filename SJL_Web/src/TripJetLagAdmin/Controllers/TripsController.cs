@@ -25,7 +25,7 @@ namespace TripJetLagAdmin.Controllers
             var tripJetLagDBContext = _context.Trips.Include(t => t.Traveler)
                                 .Include(t => t.TripLegs).ThenInclude(t => t.DepartureAirportCodeNavigation)
                                 .Include(t => t.TripLegs).ThenInclude(t => t.ArrivalAirportCodeNavigation)
-                                .Include(t => t.TripLegs).ThenInclude(t => t.Note);
+                                .Include(t => t.TripLegs).ThenInclude(t => t.LegNote);
 
 
             return View(await tripJetLagDBContext.ToListAsync());

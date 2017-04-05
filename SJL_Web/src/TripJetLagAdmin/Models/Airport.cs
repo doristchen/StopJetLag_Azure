@@ -9,12 +9,9 @@ namespace TripJetLagAdmin.Models
 
     public class Airport
     {
-       
+        [Key]
         public string AirportCode { get; set; }
+        [StringLength(200)]
         public string AirportName { get; set; }
-
-        public virtual ICollection<TripLeg> TripLegArrivalAirportCodeNavigation { get; set; }
-        public virtual ICollection<TripLeg> TripLegDepartureAirportCodeNavigation { get; set; }
-        
-    }
+  }
 }
