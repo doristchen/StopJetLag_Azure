@@ -38,9 +38,7 @@ namespace TripJetLagAPI.Controllers
             return await _tripnoteRepository.GetAll();
         }
 
-        [HttpGet ("{id}")]
-        //[HttpGet]
-        //[Route("{id:int}")]
+        [HttpGet, Route("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
             var item = await _tripnoteRepository.Find(id);
@@ -53,9 +51,7 @@ namespace TripJetLagAPI.Controllers
         }
 
 
-        [HttpPut("{id}")]
-        //[HttpPut]
-        //[Route("{id:int}")]
+        [HttpPut, Route("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] LegNote item)
         {
             if (!ModelState.IsValid)

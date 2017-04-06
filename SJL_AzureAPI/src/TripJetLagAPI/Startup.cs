@@ -47,9 +47,8 @@ namespace TripJetLagAPI
                 options.UseSqlServer(Configuration["MobileData:MobileDbConnection"]));
 
             services.AddMvc();
-
-            services.AddSingleton<ITripAdviceRepository, TripAdviceRepository>();
-            services.AddSingleton<ITripNoteRepository, TripNoteRepository>();
+            services.AddScoped<ITripAdviceRepository, TripAdviceRepository>();
+            services.AddScoped<ITripNoteRepository, TripNoteRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline

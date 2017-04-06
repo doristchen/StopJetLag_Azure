@@ -38,8 +38,7 @@ namespace TripJetLagAPI.Controllers
             return await _tripadviceRepository.GetAll();
         }
 
-        [HttpGet ("{id}")]
-        //[Route("{id:int}")]
+        [HttpGet, Route("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
             var item = await _tripadviceRepository.Find(id);
@@ -52,7 +51,7 @@ namespace TripJetLagAPI.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
+        [HttpPut, Route("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] Advice item)
         {
             if (!ModelState.IsValid)

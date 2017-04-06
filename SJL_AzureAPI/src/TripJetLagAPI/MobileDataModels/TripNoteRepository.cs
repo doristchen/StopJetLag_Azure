@@ -46,7 +46,7 @@ namespace TripJetLagAPI.MobileDataModels
 
                 results.Add(newItem);
             }
-
+            dataReader.Dispose();
             return results;
         }
 
@@ -62,12 +62,14 @@ namespace TripJetLagAPI.MobileDataModels
 
         public async Task<LegNote> Find (int id)
         {
-            return await _tcontext.LegNotes.FirstOrDefaultAsync(t => t.NoteId == id);
+            return await _tcontext.LegNotes.AsNoTracking()
+                .FirstOrDefaultAsync(t => t.NoteId == id);
         }
 
         public async Task<IEnumerable<LegNote>> GetAll()
         {
-            return await _tcontext.LegNotes.AsNoTracking().ToListAsync();
+            return await _tcontext.LegNotes.AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<int> Update(LegNote item)

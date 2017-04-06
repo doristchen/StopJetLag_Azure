@@ -25,6 +25,7 @@ namespace TripJetLagAPI.MobileDataModels
         {
             List<AdviceMobile> results = new List<AdviceMobile>();
 
+           
             while (await dataReader.ReadAsync())
             {
                 AdviceMobile newItem = new AdviceMobile();
@@ -49,6 +50,7 @@ namespace TripJetLagAPI.MobileDataModels
                 results.Add(newItem);
             }
 
+            dataReader.Dispose();
             return results;
         }
 
@@ -64,13 +66,16 @@ namespace TripJetLagAPI.MobileDataModels
 
         public async Task<Advice> Find(int id)
         {
-            return await _tcontext.Advices.FirstOrDefaultAsync(t => t.AdviceId == id);
+            return await _tcontext.Advices.AsNoTracking()
+                .FirstOrDefaultAsync(t => t.AdviceId == id);
         }
 
         public async Task<IEnumerable<Advice>> GetAll()
         {
-            return await _tcontext.Advices.Include(t => t.Category).Include(t => t.TripLeg).ThenInclude(t => t.DepartureAirportCodeNavigation)
-                .Include(t => t.TripLeg).ThenInclude(t => t.ArrivalAirportCodeNavigation).Include(t => t.TripLeg).ThenInclude(t => t.Trip)
+            return await _tcontext.Advices.Include(t => t.Category)
+                .Include(t => t.TripLeg).ThenInclude(t => t.DepartureAirportCodeNavigation)
+                .Include(t => t.TripLeg).ThenInclude(t => t.ArrivalAirportCodeNavigation)
+                .Include(t => t.TripLeg).ThenInclude(t => t.Trip)
                 .ThenInclude(t => t.Traveler).AsNoTracking().ToListAsync();
         }
 
